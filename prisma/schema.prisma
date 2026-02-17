@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  // Жаңы талаалар:
+  username  String?   // Колдонуучунун аты (UI үчүн)
+  avatarUrl String?   // Аватар үчүн шилтеме
+  
+  // Байланыштар:
+  messages  Message[] // Колдонуучу жазган билдирүүлөр
+  rooms     Room[]    @relation("UserRooms") // Колдонуучу мүчө болгон бөлмөлөр
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Room {
+  id        String    @id @default(uuid())
+  name      String?   
+  isGroup   Boolean   @default(false) 
+  
+  messages  Message[]
+  users     User[]    @relation("UserRooms")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("rooms")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  text      String
+
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  isRead    Boolean  @default(false)
+
+  @@map("messages")
+}
