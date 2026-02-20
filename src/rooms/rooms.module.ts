@@ -3,9 +3,10 @@ import { RoomsController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { RoomsRepository } from './rooms.repository';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, AuthModule],
   controllers: [RoomsController],
   providers: [RoomsService, RoomsRepository],
 })

@@ -5,9 +5,20 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class RoomsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(name: string) {
+  create(name: string, isGroup: boolean) {
     return this.prisma.room.create({
-      data: { name },
+      data: { name, isGroup },
+    });
+  }
+
+  findAll() {
+    return this.prisma.room.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+  delete(id: string) {
+    return this.prisma.room.delete({
+      where: { id },
     });
   }
 }
