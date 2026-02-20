@@ -4,13 +4,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // app.enableCors({
-  //   origin: ['http://localhost:3000', 'https://nexus-alpha-navy.vercel.app'],
-  //   credentials: true,
-  // });
-
   app.enableCors({
-  origin: true, // Бардык жерден келген сурамдарга уруксат берет
+  origin: ['http://localhost:3000', 'https://nexus-alpha-navy.vercel.app'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   credentials: true,
 });
