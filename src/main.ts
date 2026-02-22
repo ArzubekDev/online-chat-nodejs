@@ -4,13 +4,13 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
- cors: {
+app.enableCors({
     origin: ['http://localhost:3000', 'https://nexus-alpha-navy.vercel.app'],
-    methods: ['GET', 'POST', 'DELETE'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH'], 
+    maxAge: 86400,
     credentials: true,
-  },
-});
+    allowedHeaders: ['Content-Type', 'Authorization'], 
+  });
 
   const port = process.env.PORT || 3000;
 
