@@ -72,12 +72,13 @@ async handleMessage(
   return savedMessage;
 }
 
+
 @SubscribeMessage('typing')
 handleTyping(
   @MessageBody() data: { roomId: string; userId: string },
   @ConnectedSocket() client: Socket,
 ) {
-  client.to(data.roomId).emit('user-typing', data.userId);
+  client.to(data.roomId).emit('user-typing', { userId: data.userId });
 }
 
 @SubscribeMessage('stop-typing')
@@ -85,7 +86,7 @@ handleStopTyping(
   @MessageBody() data: { roomId: string; userId: string },
   @ConnectedSocket() client: Socket,
 ) {
-  client.to(data.roomId).emit('user-stop-typing', data.userId);
+  client.to(data.roomId).emit('user-stop-typing', { userId: data.userId });
 }
 
 }
