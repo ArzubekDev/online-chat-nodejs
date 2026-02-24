@@ -11,6 +11,7 @@ import { MessagesGateway } from './messages.gateway';
   imports: [PrismaModule, AuthModule],
   controllers: [MessagesController],
   providers: [MessagesService, MessagesRepository, WsJwtGuard, MessagesGateway],
+  exports: [MessagesGateway]
 })
 export class MessagesModule {}
 
