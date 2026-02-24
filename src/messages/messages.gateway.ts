@@ -71,4 +71,21 @@ async handleMessage(
   this.server.to(payload.roomId).emit('new-message', savedMessage);
   return savedMessage;
 }
+
+@SubscribeMessage('typing')
+handleTyping(
+  @MessageBody() data: { roomId: string; userId: string },
+  @ConnectedSocket() client: Socket,
+) {
+  client.to(data.roomId).emit('user-typing', data.userId);
+}
+
+@SubscribeMessage('stop-typing')
+handleStopTyping(
+  @MessageBody() data: { roomId: string; userId: string },
+  @ConnectedSocket() client: Socket,
+) {
+  client.to(data.roomId).emit('user-stop-typing', data.userId);
+}
+
 }

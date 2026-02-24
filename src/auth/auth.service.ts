@@ -39,7 +39,7 @@ public async register(dto: CreateAuthDto) {
   });
 
   const { password, ...userData } = newUser;
-  return { user: userData, token };
+  return { user: userData, accessToken: token };
 }
 
 
